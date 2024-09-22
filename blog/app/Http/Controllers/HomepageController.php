@@ -11,3 +11,5 @@ class HomepageController extends Controller
         return view('homePage');
     }
 }
+
+//wanna let you know PHP IS NOT YET DEAD!!!
