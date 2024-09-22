@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>OurApp</title>
+    <title>Connector</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"
@@ -21,7 +21,8 @@
 <body>
     <header class="header-bar mb-3">
         <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-            <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">OurApp</a></h4>
+            <img class="logo" src="/logo.jpg" alt="logo">
+            <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">Connector</a></h4>
             <form action="#" method="POST" class="mb-0 pt-2 pt-md-0">
                 <div class="row align-items-center">
                     <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
@@ -42,8 +43,9 @@
     <!-- header ends here -->
     {{ $slot }}
     <!-- footer begins -->
-    <footer class="border-top text-center small text-muted py-3">
-        <p class="m-0">Copyright &copy; 2022 <a href="/" class="text-muted">OurApp</a>. All rights reserved.
+    <footer class="border-top text-center small text-white py-3 m-0">
+        <p class="m-0">Copyright &copy; 2022 <a href="/" class="text-white">Connector</a>. All rights
+            reserved.
         </p>
     </footer>
 

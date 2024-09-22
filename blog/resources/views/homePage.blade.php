@@ -15,18 +15,33 @@
                         <label for="username-register" class="text-muted mb-1"><small>Username</small></label>
                         <input name="username" id="username-register" class="form-control" type="text"
                             placeholder="Pick a username" autocomplete="off" />
+                        {{-- this message below will show when error occurs: --}}
+                        @error('username')
+                            <p class="m-0 alert alert-danger shadow-sm">{{ $message }}</p>
+                        @enderror
+                        {{-- this message below will show when error occurs --}}
                     </div>
 
                     <div class="form-group">
                         <label for="email-register" class="text-muted mb-1"><small>Email</small></label>
                         <input name="email" id="email-register" class="form-control" type="text"
                             placeholder="you@example.com" autocomplete="off" />
+                        {{-- this message below will show when error occurs: --}}
+                        @error('email')
+                            <p class="m-0 alert alert-danger shadow-sm">{{ $message }}</p>
+                        @enderror
+                        {{-- this message below will show when error occurs --}}
                     </div>
 
                     <div class="form-group">
                         <label for="password-register" class="text-muted mb-1"><small>Password</small></label>
                         <input name="password_confirmation" id="password-register" class="form-control" type="password"
                             placeholder="Create a password" />
+                        {{-- this message below will show when error occurs: --}}
+                        @error('email')
+                            <p class="m-0 alert alert-danger shadow-sm">{{ $message }}</p>
+                        @enderror
+                        {{-- this message below will show when error occurs --}}
                     </div>
 
                     <div class="form-group">
@@ -34,10 +49,15 @@
                                 Password</small></label>
                         <input name="password" id="password-register-confirm" class="form-control" type="password"
                             placeholder="Confirm password" />
+                        {{-- this message below will show when error occurs: --}}
+                        @error('email')
+                            <p class="m-0 alert alert-danger shadow-sm">{{ $message }}</p>
+                        @enderror
+                        {{-- this message below will show when error occurs --}}
                     </div>
 
                     <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block">Sign up for
-                        OurApp</button>
+                        Connector</button>
                 </form>
             </div>
         </div>
