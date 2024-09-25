@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    // Function registration:
+
     public function register(Request $request)
     {
         //user validation:
@@ -21,8 +23,43 @@ class UserController extends Controller
         $userData['password'] = bcrypt($userData['password']);
 
         //storing it to the database:
-        User::create($userData);
+        $user = User::create($userData);
+        auth()->login($user);
+        return redirect('/')->with('Account Created.');
+    }
 
-        return 'you are registered!!!!!!!!';
+
+    // Function for login:
+    public function login(Request $request)
+    {
+        $userData = $request->validate([
+            'loginusername' => 'required',
+            'loginpassword' => 'required'
+        ]);
+
+        if (auth()->attempt(['username' => $userData['loginusername'], 'password' => $userData['loginpassword']])) {
+            $request->session()->regenerate();
+            return redirect('/')->with('success', 'You successfully log-in.');
+        } else {
+            return redirect('/')->with('failure', 'invalid credentials');
+        }
+    }
+
+    // Function for log-out:
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/')->with('success', 'You successfully log-out.');
+    }
+
+
+    // Function for the user who log-in successfully:
+    public function homefeed()
+    {
+        if (auth()->check()) {
+            return view('homepageFeed');
+        } else {
+            return view('homePage');
+        }
     }
 }

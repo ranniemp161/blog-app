@@ -15,13 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomepageController::class, "homePage"]);
+Route::get('/', [UserController::class, "homefeed"]);
 
 Route::post('/register', [UserController::class, "register"]);
-
-
-// this is my upcoming personal project it's like a sort of a social media app!! basta abangan niyo nalang.
-
-//it's not yet done!
-
-// I can't speak so Im just typing rn.
+Route::post('/login', [UserController::class, "login"]);
+Route::post('/logout', [UserController::class, "logout"]);
