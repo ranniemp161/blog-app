@@ -23,4 +23,6 @@ Route::post('/logout', [UserController::class, "logout"])->middleware('auth');
 // Blog post related routes:
 Route::get('/create-post', [PostController::class, 'showPostForm'])->middleware('shouldBeloggedIn');
 Route::post('/create-post', [PostController::class, 'storeNewPost'])->middleware('shouldBeloggedIn');
-Route::get('/post/{post}', [PostController::class, 'viewSinglePost'])->middleware('shouldBeloggedIn');
+Route::get('/post/{post}', [PostController::class, 'viewSinglePost']);
+Route::get('/profile/{user:username}', [UserController::class, 'profile']);
+Route::delete('/post/{post}', [UserController::class, 'delete']);

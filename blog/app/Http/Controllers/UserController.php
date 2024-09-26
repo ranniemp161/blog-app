@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -61,5 +62,31 @@ class UserController extends Controller
         } else {
             return view('homePage');
         }
+    }
+
+    //show list of posts by the user:
+    public function profile(User $user)
+    {
+
+        return View(
+            'profile-post',
+            [
+                'username' => $user->username,
+                'posts' => $user->posts()->latest()->get(),
+                'postCount' => $user->posts()->count()
+            ]
+        );
+    }
+
+    //delete the post method:
+
+    public function delete(Post $post)
+    {
+        if (auth()->user()->cannot('delete', $post)) {
+            return 'You cannot do that';
+        }
+
+        $post->delete();
+        return redirect('/profile/' . auth()->user()->username)->with('success', 'deleted successfully');
     }
 }
