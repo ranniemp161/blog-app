@@ -77,16 +77,4 @@ class UserController extends Controller
             ]
         );
     }
-
-    //delete the post method:
-
-    public function delete(Post $post)
-    {
-        if (auth()->user()->cannot('delete', $post)) {
-            return 'You cannot do that';
-        }
-
-        $post->delete();
-        return redirect('/profile/' . auth()->user()->username)->with('success', 'deleted successfully');
-    }
 }
