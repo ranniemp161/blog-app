@@ -77,4 +77,20 @@ class UserController extends Controller
             ]
         );
     }
+
+    //avatar-form method:
+
+    public function showAvatar()
+    {
+        return view('avatar-form');
+    }
+
+    //store the avatar:
+
+    public function storeAvatar(Request $request)
+    {
+        $request->file('avatar')->store('public/avatars');
+
+        return 'uploaded';
+    }
 }

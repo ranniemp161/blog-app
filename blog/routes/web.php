@@ -26,6 +26,8 @@ Route::get('/', [UserController::class, "homefeed"])->name('login');
 Route::post('/register', [UserController::class, "register"])->middleware('guest');
 Route::post('/login', [UserController::class, "login"])->middleware('guest');
 Route::post('/logout', [UserController::class, "logout"])->middleware('auth');
+Route::get('/manage-avatar', [UserController::class, "showAvatar"])->middleware('shouldBeloggedIn');
+Route::post('/manage-avatar', [UserController::class, "storeAvatar"])->middleware('shouldBeloggedIn');
 
 // Blog post related routes:
 Route::get('/create-post', [PostController::class, 'showPostForm'])->middleware('shouldBeloggedIn');
