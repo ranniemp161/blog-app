@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class UserController extends Controller
 {
@@ -72,6 +75,7 @@ class UserController extends Controller
             'profile-post',
             [
                 'username' => $user->username,
+                'avatar' => $user->avatar,
                 'posts' => $user->posts()->latest()->get(),
                 'postCount' => $user->posts()->count()
             ]
@@ -89,8 +93,39 @@ class UserController extends Controller
 
     public function storeAvatar(Request $request)
     {
-        $request->file('avatar')->store('public/avatars');
+        // Validate the uploaded file to ensure it's an image and within the size limit
+        $validatedData = $request->validate([
+            'avatar' => 'required|image|max:3000'
+        ]);
 
-        return 'uploaded';
+        // Get the authenticated user
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        // Generate a unique filename for the avatar
+        $filename = sprintf('%d-%s.jpg', $user->id, uniqid());
+
+        // Initialize the ImageManager instance and process the uploaded avatar
+        $imageManager = new ImageManager(new Driver());
+        $avatarImage = $imageManager->read($request->file('avatar'));
+
+        // Resize the image to 120x120 pixels and convert it to JPEG format
+        $resizedAvatar = $avatarImage->cover(120, 120)->toJpeg();
+
+        // Store the processed image in the specified directory
+        Storage::put("public/avatars/{$filename}", $resizedAvatar);
+
+        // Update the user's avatar filename in the database
+        $oldAvatar = $user->avatar;
+        $user->avatar = $filename;
+        $user->save(); // @phpstan-ignore-line;
+
+        if ($oldAvatar != "/fallback-avatar.jpg") {
+            Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
+        }
+
+
+
+        return back()->with('success', 'Avatar uploaded successfully');
     }
 }
