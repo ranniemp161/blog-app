@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Gate;
@@ -36,6 +37,10 @@ Route::get('/post/{post}', [PostController::class, 'viewSinglePost']);
 Route::delete('/post/{post}', [PostController::class, 'delete'])->middleware('can:delete,post');
 Route::get('/post/{post}/edit', [PostController::class, 'showEditForm'])->middleware('can:update,post');
 Route::put('/post/{post}', [PostController::class, 'updatePost'])->middleware('can:update,post');
+
+//Follower related routes:
+Route::post('/follow/{user:username}', [FollowController::class, 'follow'])->middleware('shouldBeloggedIn');
+Route::post('/unfollow/{user:username}', [FollowController::class, 'unfollow'])->middleware('shouldBeloggedIn');
 
 //Profile related routes:
 Route::get('/profile/{user:username}', [UserController::class, 'profile']);

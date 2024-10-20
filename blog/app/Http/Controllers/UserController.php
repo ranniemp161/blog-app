@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -70,6 +70,11 @@ class UserController extends Controller
     //show list of posts by the user:
     public function profile(User $user)
     {
+        $currentlyFollwing = 0;
+
+        if (auth()->check()) {
+            $currentlyFollwing = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+        }
 
         return View(
             'profile-post',
@@ -77,7 +82,8 @@ class UserController extends Controller
                 'username' => $user->username,
                 'avatar' => $user->avatar,
                 'posts' => $user->posts()->latest()->get(),
-                'postCount' => $user->posts()->count()
+                'postCount' => $user->posts()->count(),
+                'currentlyFollowed' => $currentlyFollwing
             ]
         );
     }
@@ -94,7 +100,7 @@ class UserController extends Controller
     public function storeAvatar(Request $request)
     {
         // Validate the uploaded file to ensure it's an image and within the size limit
-        $validatedData = $request->validate([
+        $request->validate([
             'avatar' => 'required|image|max:3000'
         ]);
 
