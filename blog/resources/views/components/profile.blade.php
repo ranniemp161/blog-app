@@ -29,10 +29,15 @@
         </h2>
 
         <div class="profile-nav nav nav-tabs pt-2 mb-4">
-            <a href="/profile/{{ $username }}" class="profile-nav-link nav-item nav-link active">Posts:
+            <a href="/profile/{{ $username }}"
+                class="profile-nav-link nav-item nav-link {{ Request::segment(3) == '' ? 'active' : '' }}">Posts:
                 {{ $postCount }}</a>
-            <a href="/profile/{{ $username }}/followers" class="profile-nav-link nav-item nav-link">Followers: 3</a>
-            <a href="/profile/{{ $username }}/following" class="profile-nav-link nav-item nav-link">Following: 2</a>
+            <a href="/profile/{{ $username }}/followers"
+                class="profile-nav-link nav-item nav-link {{ Request::segment(3) == 'followers' ? 'active' : '' }}">Followers:
+                3</a>
+            <a href="/profile/{{ $username }}/following"
+                class="profile-nav-link nav-item nav-link {{ Request::segment(3) == 'following' ? 'active' : '' }}">Following:
+                2</a>
         </div>
 
         <div class="profile-slot-content">
