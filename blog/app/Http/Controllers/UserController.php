@@ -87,6 +87,46 @@ class UserController extends Controller
             ]
         );
     }
+    //show list of the user's followers
+    public function profileFollowers(User $user)
+    {
+        $currentlyFollwing = 0;
+
+        if (auth()->check()) {
+            $currentlyFollwing = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+        }
+
+        return View(
+            'profile-following',
+            [
+                'username' => $user->username,
+                'avatar' => $user->avatar,
+                'posts' => $user->posts()->latest()->get(),
+                'postCount' => $user->posts()->count(),
+                'currentlyFollowed' => $currentlyFollwing
+            ]
+        );
+    }
+    //show list of the user's following
+    public function profileFollowing(User $user)
+    {
+        $currentlyFollwing = 0;
+
+        if (auth()->check()) {
+            $currentlyFollwing = Follow::where([['user_id', '=', auth()->user()->id], ['followeduser', '=', $user->id]])->count();
+        }
+
+        return View(
+            'profile-followers',
+            [
+                'username' => $user->username,
+                'avatar' => $user->avatar,
+                'posts' => $user->posts()->latest()->get(),
+                'postCount' => $user->posts()->count(),
+                'currentlyFollowed' => $currentlyFollwing
+            ]
+        );
+    }
 
     //avatar-form method:
 

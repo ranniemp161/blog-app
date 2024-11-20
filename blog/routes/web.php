@@ -3,7 +3,6 @@
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,3 +43,5 @@ Route::post('/unfollow/{user:username}', [FollowController::class, 'unfollow'])-
 
 //Profile related routes:
 Route::get('/profile/{user:username}', [UserController::class, 'profile']);
+Route::get('/profile/{user:username}/followers', [UserController::class, 'profileFollowers']);
+Route::get('/profile/{user:username}/following', [UserController::class, 'profileFollowing']);
