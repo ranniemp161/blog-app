@@ -4,11 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Post;
+use App\Models\Follow;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -52,9 +54,32 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get all posts from users that the current user is following.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function postFeeds()
+    {
+        return $this->hasManyThrough(Post::class, Follow::class, 'user_id', 'user_id', 'id', 'followeduser');
+    }
+
     // relationship to User with the post
     public function posts()
     {
         return $this->hasMany(Post::class, 'user_id');
+    }
+
+    //relationship between the user and the followers
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'followeduser');
+    }
+
+    //relationship between the user and the following
+
+    public function following()
+    {
+        return $this->hasMany(Follow::class, 'user_id');
     }
 }

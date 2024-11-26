@@ -34,10 +34,10 @@
                 {{ $sharedData['postCount'] }}</a>
             <a href="/profile/{{ $sharedData['username'] }}/followers"
                 class="profile-nav-link nav-item nav-link {{ Request::segment(3) == 'followers' ? 'active' : '' }}">Followers:
-                3</a>
+                {{ $sharedData['followersCount'] }}</a>
             <a href="/profile/{{ $sharedData['username'] }}/following"
                 class="profile-nav-link nav-item nav-link {{ Request::segment(3) == 'following' ? 'active' : '' }}">Following:
-                2</a>
+                {{ $sharedData['followingsCount'] }}</a>
         </div>
 
         <div class="profile-slot-content">

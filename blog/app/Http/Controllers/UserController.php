@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Follow;
+
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
-use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class UserController extends Controller
 {
@@ -62,7 +63,10 @@ class UserController extends Controller
     public function homefeed()
     {
         if (auth()->check()) {
-            return view('homepageFeed');
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+
+            return view('homepageFeed', ['feedposts' => $user->postFeeds()->latest()->get()]);
         } else {
             return view('homePage');
         }
@@ -80,7 +84,9 @@ class UserController extends Controller
             'username' => $user->username,
             'avatar' => $user->avatar,
             'postCount' => $user->posts()->count(),
-            'currentlyFollowed' => $currentlyFollwing
+            'currentlyFollowed' => $currentlyFollwing,
+            'followersCount' => $user->followers()->count(),
+            'followingsCount' => $user->following()->count()
 
         ]);
     }
@@ -104,10 +110,10 @@ class UserController extends Controller
         $this->sharedData($user);
 
         return View(
-            'profile-following',
+            'profile-followers',
             [
 
-                'posts' => $user->posts()->latest()->get()
+                'followers' => $user->followers()->latest()->get()
 
             ]
         );
@@ -117,10 +123,10 @@ class UserController extends Controller
     {
         $this->sharedData($user);
         return View(
-            'profile-followers',
+            'profile-following',
             [
 
-                'posts' => $user->posts()->latest()->get()
+                'followings' => $user->following()->latest()->get()
 
             ]
         );
