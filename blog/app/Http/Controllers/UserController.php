@@ -66,7 +66,7 @@ class UserController extends Controller
             /** @var \App\Models\User $user */
             $user = auth()->user();
 
-            return view('homepageFeed', ['feedposts' => $user->postFeeds()->latest()->get()]);
+            return view('homepageFeed', ['feedposts' => $user->postFeeds()->latest()->paginate(4)]);
         } else {
             return view('homePage');
         }
