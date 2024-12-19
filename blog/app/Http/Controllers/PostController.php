@@ -70,4 +70,8 @@ class PostController extends Controller
 
         return back()->with('success', 'post updated');
     }
+
+    //For Searching Qeuries:
+
+    public function search() {}
 }
