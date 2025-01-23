@@ -10,7 +10,7 @@
         "intervention/image": "^3.8",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/scout": "*",
+        "laravel/scout": "^10.11",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.5"
     },
